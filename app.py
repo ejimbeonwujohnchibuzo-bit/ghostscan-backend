@@ -69,9 +69,11 @@ from flask_cors import CORS  # 1. Import this
 app = Flask(__name__)
 CORS(app)  # 2. Add this line right here!
 
-@app.route('/scan', methods=['POST'])
+@app.route('/scan', methods=['POST', 'OPTIONS']) # Add OPTIONS to help with CORS
 def scan():
-    # ... your existing code ...
-    return jsonify({"status": "Success"})
-if __name__ == '__main__':
-    app.run() # Remove port=5000 and debug=True for production
+    if request.method == 'OPTIONS':
+        return '', 200 # Handle pre-flight request
+        
+    data = request.json
+    # ... your existing logic ...
+    return jsonify({"status": "Success", "data": "Scan Received"})
