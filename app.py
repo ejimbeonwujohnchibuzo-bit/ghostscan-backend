@@ -63,5 +63,15 @@ def handle_scan():
         "open_ports": open_ports
     })
 
+
+from flask_cors import CORS  # 1. Import this
+
+app = Flask(__name__)
+CORS(app)  # 2. Add this line right here!
+
+@app.route('/scan', methods=['POST'])
+def scan():
+    # ... your existing code ...
+    return jsonify({"status": "Success"})
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run() # Remove port=5000 and debug=True for production
